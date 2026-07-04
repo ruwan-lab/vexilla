@@ -102,23 +102,4 @@ vexilla status         # is the daemon healthy?
 
 See [docs/tech-stack.md](docs/tech-stack.md) for rationale.
 
----
 
-## Documentation index
-
-| Document | Purpose |
-|---|---|
-| [docs/requirements.md](docs/requirements.md) | Functional & non-functional requirements |
-| [docs/architecture.md](docs/architecture.md) | System components, data flow, module layout |
-| [docs/ui-wireframes.md](docs/ui-wireframes.md) | Dashboard screen wireframes + data mapping |
-| [docs/tech-stack.md](docs/tech-stack.md) | Chosen technologies and rationale |
-| [docs/data-model.md](docs/data-model.md) | SQLite schema (DDL) |
-| [docs/collector-design.md](docs/collector-design.md) | Network + DNS capture design |
-| [docs/insight-engine.md](docs/insight-engine.md) | Detection heuristics + plain-language rules |
-| [docs/knowledge-base.md](docs/knowledge-base.md) | Offline domain knowledge base: format + build |
-| [docs/privacy.md](docs/privacy.md) | Privacy guarantees, consent, data handling |
-| [docs/mvp-scope.md](docs/mvp-scope.md) | 2–4 week MVP plan, in/out of scope |
-| [docs/roadmap.md](docs/roadmap.md) | Phased plan beyond MVP |
-| [docs/adr/](docs/adr/) | Architecture Decision Records |
-
-> **For AI agents:** start with [CLAUDE.md](CLAUDE.md), then [docs/mvp-scope.md](docs/mvp-scope.md).
