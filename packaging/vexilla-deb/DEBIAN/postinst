@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        # All Python dependencies are vendored in /usr/lib/vexilla/vendor —
+        # no pip, no network access needed.
+        deb-systemd-helper enable vexilla.service >/dev/null 2>&1 || true
+        if [ -d /run/systemd/system ]; then
+            systemctl daemon-reload >/dev/null 2>&1 || true
+            deb-systemd-invoke restart vexilla.service >/dev/null 2>&1 || true
+        fi
+        ;;
+esac

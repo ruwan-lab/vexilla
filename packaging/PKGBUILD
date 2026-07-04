@@ -1,0 +1,45 @@
+# Maintainer: Vexilla contributors <vexilla-dev@example.com>
+# Contributor: Your Name <you@example.com>
+
+pkgname=vexilla
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="See what your device is really talking to — in plain English"
+arch=('any')
+url="https://github.com/vexx/vexilla"
+license=('MIT')
+depends=(
+    'python>=3.11'
+    'python-fastapi'
+    'python-uvicorn'
+    'python-jinja'
+    'python-typer'
+    'python-pydantic'
+    'python-pydantic-settings'
+    'python-multipart'
+)
+makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/vexx/vexilla/archive/v$pkgver.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    cd "$srcdir/$pkgname-$pkgver"
+    python -m build --wheel --no-isolation
+}
+
+package() {
+    cd "$srcdir/$pkgname-$pkgver"
+    python -m installer --destdir="$pkgdir" dist/*.whl
+
+    # Install systemd service
+    install -Dm644 packaging/vexilla.service \
+        "$pkgdir/usr/lib/systemd/system/vexilla.service"
+
+    # Install KB
+    install -Dm644 data/kb.db \
+        "$pkgdir/usr/share/vexilla/kb.db"
+
+    # Install config example
+    install -Dm644 packaging/config.toml.example \
+        "$pkgdir/etc/vexilla/config.toml"
+}

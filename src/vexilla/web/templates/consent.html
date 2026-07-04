@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Welcome to Vexilla{% endblock %}
+{% block content %}
+
+<div style="max-width: 600px; margin: 3rem auto;">
+
+  <h1 style="font-size: 1.8rem; margin-bottom: 1rem;">Welcome to Vexilla</h1>
+
+  <p style="margin-bottom: 1.5rem; line-height: 1.6; color: #444;">
+    Vexilla shows you what your device talks to on the internet — in plain language.
+    Before it starts, here's exactly what it does.
+  </p>
+
+  <div style="display: flex; gap: 2rem; margin-bottom: 2rem;">
+    <div style="flex: 1;">
+      <h3 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: #2ecc71;">Vexilla WILL see</h3>
+      <ul style="list-style: none; line-height: 1.8; font-size: 0.9rem; color: #444;">
+        <li>✓ which apps go online</li>
+        <li>✓ which services/domains</li>
+        <li>✓ how much data they use</li>
+        <li>✓ when (active/background)</li>
+      </ul>
+    </div>
+    <div style="flex: 1;">
+      <h3 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: #e74c3c;">Vexilla will NEVER</h3>
+      <ul style="list-style: none; line-height: 1.8; font-size: 0.9rem; color: #444;">
+        <li>✗ decrypt your traffic</li>
+        <li>✗ read your messages or pages</li>
+        <li>✗ send your data anywhere</li>
+        <li>✗ require an account</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 2rem; font-size: 0.9rem; color: #555; line-height: 1.6;">
+    <p>
+      Everything is stored only on this device (default: 30 days).
+      You can delete your data at any time.
+      No telemetry, no tracking, no cloud.
+    </p>
+  </div>
+
+  {% if already %}
+    <p style="color: #555;">✓ You've already consented. <a href="/">Go to dashboard &rarr;</a></p>
+  {% else %}
+    <form action="/api/consent" method="post">
+      <button type="submit"
+              style="background: #4a90d9; color: #fff; border: none;
+                     padding: 0.8rem 2rem; border-radius: 6px;
+                     font-size: 1rem; cursor: pointer;">
+        I understand — start monitoring
+      </button>
+    </form>
+    <p style="margin-top: 1rem; font-size: 0.8rem; color: #999;">
+      You can stop monitoring or delete all data later from Settings.
+    </p>
+  {% endif %}
+
+</div>
+
+{% endblock %}

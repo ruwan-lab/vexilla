@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        # Create vexilla user if not exists
+        if ! getent passwd vexilla >/dev/null 2>&1; then
+            adduser --system --group --quiet --no-create-home \
+                --disabled-login --shell /usr/sbin/nologin vexilla
+        fi
+
+        # Build the knowledge base
+        if command -v vexilla-kb-build >/dev/null 2>&1; then
+            vexilla-kb-build 2>/dev/null || true
+        fi
+
+        # Enable and start the service
+        deb-systemd-helper enable vexilla.service >/dev/null 2>&1 || true
+        deb-systemd-invoke start vexilla.service >/dev/null 2>&1 || true
+        ;;
+esac

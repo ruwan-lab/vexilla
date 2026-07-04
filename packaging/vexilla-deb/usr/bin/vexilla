@@ -1,0 +1,13 @@
+#!/usr/bin/python3
+"""Vexilla launcher — installed system-wide by the .deb package."""
+import sys
+
+# Vexilla source + vendored dependencies (private to this package,
+# deliberately NOT on the interpreter's global path).
+sys.path.insert(0, "/usr/lib/vexilla/vendor")
+sys.path.insert(0, "/usr/lib/vexilla/src")
+
+from vexilla.cli.app import app
+
+if __name__ == "__main__":
+    sys.exit(app())

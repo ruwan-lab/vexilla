@@ -1,0 +1,38 @@
+Source: vexilla
+Section: utils
+Priority: optional
+Maintainer: Vexilla contributors <vexilla-dev@example.com>
+Build-Depends: debhelper-compat (= 13), dh-python, python3-all, python3-setuptools, python3-venv
+Standards-Version: 4.6.0
+Homepage: https://github.com/vexx/vexilla
+Rules-Requires-Root: no
+
+Package: vexilla
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends},
+ python3 (>= 3.11),
+ python3-fastapi,
+ python3-uvicorn,
+ python3-jinja2,
+ python3-typer,
+ python3-pydantic,
+ python3-pydantic-settings,
+ python3-multipart,
+ adduser
+Description: See what your device is really talking to — in plain English.
+ Vexilla is a lightweight, privacy-first Linux agent that watches which
+ applications use the internet, which external services and domains they
+ connect to, how much data they consume, and whether that behavior is
+ normal — then explains it all in plain human language.
+ .
+ Vexilla is NOT an antivirus and NOT a firewall. It is a digital
+ transparency companion for normal people.
+ .
+ Features:
+  * Per-application network activity monitoring
+  * Automatic DNS naming via passive packet capture
+  * Active vs background classification
+  * Plain-language daily summaries and actionable suggestions
+  * Local web dashboard (loopback-only, no cloud)
+  * Deterministic heuristics for unusual behavior detection
+  * Offline knowledge base — no runtime LLM, no data leaves your device

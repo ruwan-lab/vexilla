@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Timeline — Vexilla{% endblock %}
+{% block content %}
+
+<h2 style="margin-bottom: 1rem; font-size: 1.2rem;">Timeline</h2>
+
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  {% if timeline %}
+  <div style="display: flex; align-items: flex-end; gap: 3px; height: 120px;">
+    {% for t in timeline %}
+    <div style="flex:1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 0;">
+      <!-- Background portion -->
+      <div style="width: 100%; background: #e67e22; height: {{ t.bg_pct }}%; min-height: 1px; border-radius: 1px 1px 0 0;"
+           title="{{ t.hour }} — {{ t.total_mb }} MB ({{ t.bg_mb }} BG)"></div>
+      <!-- Active portion (on top of bg) -->
+      <div style="width: 100%; background: #3498db; height: {{ t.total_pct - t.bg_pct }}%; min-height: 1px; border-radius: 1px 1px 0 0;"
+           title="{{ t.hour }} — {{ t.total_mb }} MB ({{ t.bg_mb }} BG)"></div>
+    </div>
+    {% endfor %}
+  </div>
+  <div style="display: flex; gap: 1rem; margin-top: 0.5rem; font-size: 0.75rem; color: #888;">
+    <span><span style="display:inline-block; width:10px; height:10px; background:#3498db; border-radius:2px;"></span> Active</span>
+    <span><span style="display:inline-block; width:10px; height:10px; background:#e67e22; border-radius:2px;"></span> Background</span>
+  </div>
+  {% else %}
+  <p style="color:#999;">No timeline data yet.</p>
+  {% endif %}
+</div>
+
+<!-- Notable moments -->
+{% if notable %}
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  <h3 style="font-size:0.9rem; color:#555; margin-bottom:0.75rem;">Notable moments</h3>
+  {% for n in notable %}
+  <div style="padding:0.5rem 0; border-bottom:1px solid #f0f0f0; font-size:0.9rem;">
+    <span>{{ flag_icon(n[1]) }}</span>
+    <strong>{{ n[2] }}</strong>
+    <a href="/flags" style="color:#4a90d9; font-size:0.8rem; float:right;">look →</a>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

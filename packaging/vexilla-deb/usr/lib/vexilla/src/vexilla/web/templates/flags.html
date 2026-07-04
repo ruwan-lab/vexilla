@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Flags — Vexilla{% endblock %}
+{% block content %}
+
+<h2 style="margin-bottom: 1rem; font-size: 1.2rem;">Flags</h2>
+
+<div style="margin-bottom: 1rem;">
+  <a href="/flags" style="color:#4a90d9; margin-right:0.5rem;{% if not filter_kind %}font-weight:600{% endif %}">All</a>
+  {% for k in kinds %}
+  <a href="/flags?kind={{ k }}" style="color:#4a90d9; margin-right:0.5rem;{% if filter_kind == k %}font-weight:600{% endif %}">{{ k }}</a>
+  {% endfor %}
+</div>
+
+<form action="/api/flags/dismiss-all" method="post" style="margin-bottom: 1rem;">
+  <button type="submit" style="background: none; border: 1px solid #ccc; padding: 0.3rem 0.8rem; border-radius: 4px; cursor: pointer; font-size: 0.8rem; color: #666;">Dismiss all</button>
+</form>
+
+{% if flags %}
+{% for f in flags %}
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; margin-bottom: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div style="flex:1;">
+      <p><span style="margin-right:0.3rem;">{{ flag_icon(f[2]) }}</span>
+         <strong>{{ f[3] }}</strong></p>
+      <p style="color:#555; font-size:0.9rem; margin-top:0.3rem; line-height:1.5;">{{ f[4] }}</p>
+      {% if f[5] %}
+      <p style="color:#4a90d9; font-size:0.85rem; margin-top:0.3rem;">💡 {{ f[5] }}</p>
+      {% endif %}
+    </div>
+    <form action="/api/flags/{{ f[0] }}/dismiss" method="post" style="margin-left:1rem;">
+      <button type="submit" style="background: none; border: 1px solid #ddd; padding: 0.2rem 0.6rem; border-radius: 4px; cursor: pointer; font-size:0.8rem; color:#999;">dismiss</button>
+    </form>
+  </div>
+  {% if f[6] %}
+  <details style="margin-top:0.5rem; font-size:0.8rem; color:#999;">
+    <summary>Why am I seeing this?</summary>
+    <pre style="margin-top:0.3rem; white-space:pre-wrap; font-family:monospace;">{{ f[6] }}</pre>
+  </details>
+  {% endif %}
+</div>
+{% endfor %}
+{% else %}
+<p style="color:#999;">No flags. Everything looks normal.</p>
+{% endif %}
+
+{% endblock %}

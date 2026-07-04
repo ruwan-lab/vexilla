@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vexilla"
+version = "0.1.0"
+description = "See what your device is really talking to — in plain English."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [
+    { name = "Vexilla contributors" },
+]
+keywords = ["network", "privacy", "monitoring", "linux", "transparency"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Monitoring",
+    "Topic :: Security",
+    "Topic :: Privacy",
+]
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.27.0",
+    "jinja2>=3.1.0",
+    "typer>=0.9.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "python-multipart>=0.0.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/vexx/vexilla"
+Documentation = "https://github.com/vexx/vexilla"
+Repository = "https://github.com/vexx/vexilla"
+"Bug Tracker" = "https://github.com/vexx/vexilla/issues"
+
+[project.scripts]
+vexilla = "vexilla.cli.app:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"vexilla" = ["web/templates/*.html"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]

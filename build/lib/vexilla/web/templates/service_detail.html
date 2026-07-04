@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ ep.domain or ep.ip }} — Vexilla{% endblock %}
+{% block content %}
+
+<a href="/services" style="color:#4a90d9; font-size:0.85rem;">← Services</a>
+
+<h2 style="margin: 0.5rem 0 1rem; font-size:1.2rem;">{{ ep.domain or ep.ip }}</h2>
+
+{% if ep.domain %}
+<p style="color:#888; font-size:0.85rem; margin-bottom:1rem;">IP: {{ ep.ip }} · {{ ep.name_source }}</p>
+{% endif %}
+
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  <p style="font-size: 1rem; color: #333;">
+    <strong>{{ total_mb }} MB</strong> today ·
+    <strong>{{ conn_count }}</strong> connections
+  </p>
+</div>
+
+<!-- Apps that contacted this service -->
+{% if apps_on %}
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  <h3 style="font-size:0.9rem; color:#555; margin-bottom:0.75rem;">Apps that contacted this service</h3>
+  <table style="width:100%; font-size:0.85rem;">
+    <thead><tr style="border-bottom:1px solid #e0e0e0; color:#888;">
+      <th style="text-align:left; padding:0.3rem 0;">App</th>
+      <th style="text-align:right; padding:0.3rem 0;">Data</th>
+    </tr></thead>
+    <tbody>
+      {% for a in apps_on %}
+      <tr style="border-bottom:1px solid #f5f5f5;">
+        <td style="padding:0.3rem 0;"><a href="/apps/{{ a[0] }}" style="color:#333; text-decoration:none;">{{ a[1] }}</a></td>
+        <td style="text-align:right; padding:0.3rem 0; color:#666;">{{ _mb(a[2]) }} MB</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+<!-- Insights for this endpoint -->
+{% if insights %}
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  <h3 style="font-size:0.9rem; color:#555; margin-bottom:0.75rem;">Flags</h3>
+  {% for ins in insights %}
+  <div style="padding:0.4rem 0; border-bottom:1px solid #f0f0f0;">
+    <span>{{ flag_icon(ins[2]) }}</span> <strong>{{ ins[3] }}</strong>
+    <p style="color:#666; font-size:0.8rem; margin-top:0.2rem;">{{ ins[4][:200] }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

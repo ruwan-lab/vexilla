@@ -1,0 +1,38 @@
+[Unit]
+Description=Vexilla — network transparency agent
+Documentation=https://github.com/vexx/vexilla
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=vexilla
+Group=vexilla
+RuntimeDirectory=vexilla
+RuntimeDirectoryMode=0750
+StateDirectory=vexilla
+StateDirectoryMode=0750
+Environment=VEXILLA_DB_PATH=/var/lib/vexilla/vexilla.db
+Environment=VEXILLA_KB_PATH=/usr/share/vexilla/kb.db
+Environment=VEXILLA_HOST=127.0.0.1
+Environment=VEXILLA_PORT=8787
+ExecStart=/usr/bin/vexilla serve
+WorkingDirectory=/var/lib/vexilla
+Restart=on-failure
+RestartSec=5
+RestartSteps=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+# CAP_SYS_PTRACE + CAP_DAC_READ_SEARCH let the root daemon read /proc/<pid>/fd and
+# /proc/<pid>/exe of other users' processes to attribute connections to apps.
+CapabilityBoundingSet=CAP_NET_RAW CAP_NET_ADMIN CAP_SYS_PTRACE CAP_DAC_READ_SEARCH
+AmbientCapabilities=CAP_NET_RAW CAP_NET_ADMIN CAP_SYS_PTRACE CAP_DAC_READ_SEARCH
+
+[Install]
+WantedBy=multi-user.target

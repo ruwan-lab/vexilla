@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Services — Vexilla{% endblock %}
+{% block content %}
+
+<h2 style="margin-bottom: 1rem; font-size: 1.2rem;">Services</h2>
+
+<p style="color: #666; margin-bottom: 1rem;">
+  <a href="/services?days=1" style="color:#4a90d9;{% if days == 1 %}font-weight:600{% endif %}">Today</a> ·
+  <a href="/services?days=7" style="color:#4a90d9;{% if days == 7 %}font-weight:600{% endif %}">7 days</a> ·
+  <a href="/services?days=30" style="color:#4a90d9;{% if days == 30 %}font-weight:600{% endif %}">30 days</a>
+</p>
+
+{% if domains %}
+<table style="width:100%; border-collapse: collapse; font-size:0.9rem;">
+  <thead>
+    <tr style="border-bottom: 2px solid #e0e0e0; color:#555;">
+      <th style="text-align:left; padding:0.5rem 0;">Service</th>
+      <th style="text-align:right; padding:0.5rem 0;">Data ↓</th>
+      <th style="text-align:right; padding:0.5rem 0;">Connections</th>
+      <th style="text-align:right; padding:0.5rem 0;">Apps</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for d in domains %}
+    <tr style="border-bottom: 1px solid #f0f0f0;">
+      <td style="padding:0.5rem 0; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        <a href="/services/{{ d.id }}" style="color:#333; text-decoration:none;">
+          {{ d.domain or d.ip }}
+        </a>
+        {% if d.domain is none or d.domain == d.ip %}
+        <span style="color:#999; font-size:0.75rem;">(unknown)</span>
+        {% endif %}
+      </td>
+      <td style="text-align:right; padding:0.5rem 0; color:#666;">{{ _mb(d.total_bytes) }} MB</td>
+      <td style="text-align:right; padding:0.5rem 0; color:#666;">{{ d.conn_count }}</td>
+      <td style="text-align:right; padding:0.5rem 0; color:#666;">{{ d.app_count }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p style="color: #999;">No services detected yet.</p>
+{% endif %}
+
+{% endblock %}

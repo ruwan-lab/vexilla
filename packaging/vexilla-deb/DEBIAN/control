@@ -1,0 +1,15 @@
+Package: vexilla
+Version: 0.1.0
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Vexilla contributors <vexilla-dev@example.com>
+Depends: python3 (>= 3.12), python3 (<< 3.13)
+Description: See what your device is really talking to — in plain English.
+ Vexilla is a lightweight, privacy-first Linux agent that watches which
+ applications use the internet, which external services and domains they
+ connect to, how much data they consume, and whether that behavior is
+ normal — then explains it all in plain human language.
+ .
+ Vexilla is NOT an antivirus and NOT a firewall. It is a digital
+ transparency companion for normal people.

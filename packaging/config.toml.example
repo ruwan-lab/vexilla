@@ -1,0 +1,22 @@
+# Vexilla configuration
+# Copy to /etc/vexilla/config.toml and modify as needed.
+# All values have defaults — this file is entirely optional.
+
+# ── Paths ──────────────────────────────────────────────────────────
+# db_path = "/var/lib/vexilla/vexilla.db"
+# kb_path = "/usr/share/vexilla/kb.db"
+
+# ── Network ────────────────────────────────────────────────────────
+# host = "127.0.0.1"
+# port = 8787
+
+# ── Collector ──────────────────────────────────────────────────────
+# poll_interval_s = 2.0
+# insight_interval_s = 60.0
+
+# ── Retention ──────────────────────────────────────────────────────
+# retention_days = 30
+
+# ── Behaviour ──────────────────────────────────────────────────────
+# log_level = "INFO"
+# consent_required = true

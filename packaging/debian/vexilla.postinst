@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+case "$1" in
+    configure)
+        deb-systemd-helper enable vexilla.service >/dev/null 2>&1 || true
+        deb-systemd-invoke start vexilla.service >/dev/null 2>&1 || true
+        ;;
+esac

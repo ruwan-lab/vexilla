@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Today — Vexilla{% endblock %}
+{% block content %}
+
+{% if empty %}
+  <!-- Empty state -->
+  <div style="text-align: center; margin-top: 3rem;">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">🚩</div>
+    <h2 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Vexilla is watching</h2>
+    <p style="color: #666; line-height: 1.6;">
+      Come back in a few minutes and you'll see what your device is talking to.
+    </p>
+    <p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">
+      No network data leaves this device. Your privacy is built in.
+    </p>
+  </div>
+{% else %}
+
+<div hx-get="/api/flags/count" hx-trigger="every 60s" hx-swap="none"
+     hx-target="#flag-count-badge" hidden></div>
+
+<!-- Summary card -->
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  {% if summary_text %}
+  <p style="font-size: 1.05rem; line-height: 1.6; color: #333; margin-bottom: 0.5rem;">{{ summary_text }}</p>
+  {% else %}
+  <p style="font-size: 1.05rem; line-height: 1.6; color: #333; margin-bottom: 0.5rem;">
+    Today your device talked to <strong>{{ domain_count }}</strong> services
+    across <strong>{{ app_count }}</strong> apps,
+    using <strong>{{ total_mb }} MB</strong>
+    ({{ bg_mb }} MB in the background).
+  </p>
+  {% endif %}
+</div>
+
+<!-- Mini hourly timeline -->
+{% if hours %}
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  <h3 style="font-size: 0.9rem; color: #555; margin-bottom: 0.75rem;">Activity today</h3>
+  <div style="display: flex; align-items: flex-end; gap: 3px; height: 60px;">
+    {% for h in hours %}
+    <div style="flex:1; display: flex; flex-direction: column; align-items: center;">
+      <div style="width: 100%; background: #4a90d9; height: {{ h.pct }}%; min-height: 2px; border-radius: 2px 2px 0 0;"
+           title="{{ h.hour }}:00 — {{ _mb(h.total) }} MB ({{ _mb(h.bg) }} BG)"></div>
+      {% if loop.index % 4 == 0 %}
+      <span style="font-size: 0.6rem; color: #999; margin-top: 2px;">{{ h.hour }}</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- Two-column: Top apps + Top domains -->
+<div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+  <!-- Top apps -->
+  <div style="flex: 1; background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+    <h3 style="font-size: 0.9rem; color: #555; margin-bottom: 0.75rem;">Top apps today</h3>
+    {% if top_apps %}
+    <table style="width:100%; font-size:0.85rem;">
+      {% for app in top_apps %}
+      <tr>
+        <td style="padding: 0.3rem 0;"><a href="/apps/{{ app.id }}" style="color:#333; text-decoration:none;">{{ app.name }}</a></td>
+        <td style="text-align:right; color:#666;">{{ _mb(app.total_bytes) }} MB</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <a href="/apps" style="font-size:0.8rem; color:#4a90d9;">See all apps →</a>
+    {% else %}
+    <p style="color: #999; font-size:0.85rem;">No apps detected yet.</p>
+    {% endif %}
+  </div>
+
+  <!-- Top domains -->
+  <div style="flex: 1; background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+    <h3 style="font-size: 0.9rem; color: #555; margin-bottom: 0.75rem;">Top services today</h3>
+    {% if top_domains %}
+    <table style="width:100%; font-size:0.85rem;">
+      {% for d in top_domains %}
+      <tr>
+        <td style="padding: 0.3rem 0; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          <a href="/services/{{ d.id }}" style="color:#333; text-decoration:none;">{{ d.domain or d.ip }}</a>
+        </td>
+        <td style="text-align:right; color:#666;">{{ _mb(d.total_bytes) }} MB</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <a href="/services" style="font-size:0.8rem; color:#4a90d9;">See all services →</a>
+    {% else %}
+    <p style="color: #999; font-size:0.85rem;">No services detected yet.</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Recent insights -->
+{% if insights %}
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  <h3 style="font-size: 0.9rem; color: #555; margin-bottom: 0.75rem;">Notable</h3>
+  {% for ins in insights %}
+  <div style="padding: 0.5rem 0; border-bottom: 1px solid #f0f0f0; font-size:0.9rem;">
+    <span style="margin-right:0.3rem;">{{ flag_icon(ins[2]) }}</span>
+    <strong>{{ ins[3] }}</strong>
+    <p style="color:#666; font-size:0.85rem; margin-top:0.2rem;">{{ ins[4][:200] }}{% if ins[4]|length > 200 %}…{% endif %}</p>
+  </div>
+  {% endfor %}
+  <a href="/flags" style="font-size:0.8rem; color:#4a90d9; display:block; margin-top:0.5rem;">See all flags →</a>
+</div>
+{% endif %}
+
+{% endif %}
+{% endblock %}

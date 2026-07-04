@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Vexilla{% endblock %}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+                   Ubuntu, Cantarell, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top nav ────────────────────────────────────────────── */
+    nav {
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    nav .logo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+
+    nav a {
+      color: #555;
+      text-decoration: none;
+      padding: 0.25rem 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    nav a:hover, nav a.active { color: #1a1a1a; border-color: #4a90d9; }
+
+    nav .spacer { flex: 1; }
+
+    nav .flag-count {
+      background: #e74c3c;
+      color: #fff;
+      border-radius: 10px;
+      padding: 0.1rem 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* ── Main content ───────────────────────────────────────── */
+    .container {
+      flex: 1;
+      max-width: 960px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* ── Privacy footer ─────────────────────────────────────── */
+    footer {
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      padding: 0.6rem 1.5rem;
+      font-size: 0.85rem;
+      color: #777;
+      text-align: center;
+    }
+
+    footer .shield { color: #2ecc71; }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+  <!-- ═══ Top nav ════════════════════════════════════════════ -->
+  <nav>
+    <a href="/" class="logo">🚩 Vexilla</a>
+    <a href="/" class="{% if active_page == 'today' %}active{% endif %}">Today</a>
+    <a href="/apps" class="{% if active_page == 'apps' %}active{% endif %}">Apps</a>
+    <a href="/services" class="{% if active_page == 'services' %}active{% endif %}">Services</a>
+    <a href="/timeline" class="{% if active_page == 'timeline' %}active{% endif %}">Timeline</a>
+    <a href="/flags" class="{% if active_page == 'flags' %}active{% endif %}">
+      Flags
+      {% if flag_count and flag_count > 0 %}
+        <span class="flag-count">{{ flag_count }}</span>
+      {% endif %}
+    </a>
+    <span class="spacer"></span>
+    <a href="/settings">⚙</a>
+  </nav>
+
+  <!-- ═══ Page content ═══════════════════════════════════════ -->
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- ═══ Privacy footer ═════════════════════════════════════ -->
+  <footer>
+    <span class="shield">🔒</span>
+    Everything stays on this device. Vexilla never decrypts your traffic.
+  </footer>
+
+</body>
+</html>

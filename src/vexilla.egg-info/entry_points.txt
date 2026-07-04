@@ -1,0 +1,2 @@
+[console_scripts]
+vexilla = vexilla.cli.app:app

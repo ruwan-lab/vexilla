@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Settings — Vexilla{% endblock %}
+{% block content %}
+
+<h2 style="margin-bottom: 1rem; font-size: 1.2rem;">Settings</h2>
+
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  <h3 style="font-size:0.9rem; color:#555; margin-bottom:0.75rem;">History</h3>
+  <form action="/api/settings" method="post">
+    <label style="font-size:0.9rem; color:#333;">
+      Keep data for:
+      <select name="retention_days" style="margin-left:0.5rem; padding:0.3rem;">
+        <option value="7" {% if retention_days == 7 %}selected{% endif %}>7 days</option>
+        <option value="14" {% if retention_days == 14 %}selected{% endif %}>14 days</option>
+        <option value="30" {% if retention_days == 30 %}selected{% endif %}>30 days</option>
+        <option value="60" {% if retention_days == 60 %}selected{% endif %}>60 days</option>
+        <option value="90" {% if retention_days == 90 %}selected{% endif %}>90 days</option>
+      </select>
+    </label>
+    <p style="font-size:0.8rem; color:#999; margin-top:0.3rem;">Older data is deleted automatically.</p>
+    <button type="submit" style="margin-top:0.5rem; background:#4a90d9; color:#fff; border:none; padding:0.4rem 1rem; border-radius:4px; cursor:pointer; font-size:0.85rem;">Save</button>
+  </form>
+</div>
+
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  <h3 style="font-size:0.9rem; color:#555; margin-bottom:0.75rem;">Your data</h3>
+  <p style="font-size:0.9rem; color:#333; margin-bottom:0.5rem;">Database size: {{ db_size }} MB</p>
+  <div style="display: flex; gap: 0.5rem; align-items: center;">
+    <a href="/api/data/export" style="background: #fff; border: 1px solid #4a90d9; color:#4a90d9; padding:0.4rem 0.8rem; border-radius:4px; text-decoration:none; font-size:0.8rem; display:inline-block;">Export JSON</a>
+    <a href="/api/data/export/csv" style="background: #fff; border: 1px solid #4a90d9; color:#4a90d9; padding:0.4rem 0.8rem; border-radius:4px; text-decoration:none; font-size:0.8rem; display:inline-block;">Export flows CSV</a>
+    <a href="/api/data/export/csv/insights" style="background: #fff; border: 1px solid #4a90d9; color:#4a90d9; padding:0.4rem 0.8rem; border-radius:4px; text-decoration:none; font-size:0.8rem; display:inline-block;">Export insights CSV</a>
+    <form action="/api/data/reset" method="post" style="display:inline;" onsubmit="return confirm('Delete all collected data? This cannot be undone.');">
+      <button type="submit" style="background: #fff; border: 1px solid #e74c3c; color:#e74c3c; padding:0.4rem 1rem; border-radius:4px; cursor:pointer; font-size:0.85rem;">Delete all data</button>
+    </form>
+  </div>
+</div>
+
+<div style="background: #fff; border-radius: 8px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+  <h3 style="font-size:0.9rem; color:#555; margin-bottom:0.75rem;">Status</h3>
+  <table style="font-size:0.85rem; color:#555;">
+    <tr><td style="padding:0.2rem 1rem 0.2rem 0;">Capture method:</td><td>{{ capture }}</td></tr>
+    <tr><td style="padding:0.2rem 1rem 0.2rem 0;">DNS naming:</td><td>{{ dns }}</td></tr>
+  </table>
+  <p style="margin-top:1rem; font-size:0.8rem; color:#999;">
+    Vexilla {{ version }} · MIT · runs only on this device · no account, no telemetry.
+  </p>
+</div>
+
+{% endblock %}
