@@ -39,10 +39,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/vexx/vexilla"
-Documentation = "https://github.com/vexx/vexilla"
-Repository = "https://github.com/vexx/vexilla"
-"Bug Tracker" = "https://github.com/vexx/vexilla/issues"
+Homepage = "https://github.com/ruwan-lab/vexilla/tree/main"
+Documentation = "https://github.com/ruwan-lab/vexilla/blob/main/README.md"
+Repository = "https://github.com/ruwan-lab/vexilla.git"
 
 [project.scripts]
 vexilla = "vexilla.cli.app:app"
